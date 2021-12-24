@@ -1,5 +1,5 @@
 # [name, cards in hand, cost, player payout]
-cards = {
+deck = {
     1: ["wheat field", 0, 1, 1],
     2: ["ranch", 0, 1, 1],
     23: ["bakery", 0, 1, 1],
