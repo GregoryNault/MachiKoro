@@ -15,7 +15,7 @@ def player_turn(player):
     print(f"You have just rolled a {roll}")
 
     # Checks if dice roll matches player cards and receive coins for any activated cards.
-    money.check_roll(roll, player)
+    money.check_roll(1, player)
 
 
 
