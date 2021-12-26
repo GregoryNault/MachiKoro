@@ -15,7 +15,7 @@ def player_turn(player):
     print(f"You have just rolled a {roll}")
 
     # Checks if dice roll matches player cards and receive coins for any activated cards.
-    money.check_roll(1, player)
+    money.check_roll(roll, player)
 
 
 
@@ -27,5 +27,7 @@ while not endgame:
     player_turn(greg)
     if input("what do you want to do") == "coins":
         print(greg.coins)
+    elif "pass":
+        pass
 
 
