@@ -1,5 +1,6 @@
 # Machi Koro game
-import random, player, cards, money
+import random, player, money
+import cards
 
 
 def roll_dice(player):
@@ -8,6 +9,7 @@ def roll_dice(player):
         dice_2 = random.randint(1, 6)
         return dice_1 + dice_2
     return dice_1
+
 
 def player_turn(player):
     # Player rolls a dice (2 dice if they own a train station)
@@ -18,10 +20,9 @@ def player_turn(player):
     money.check_roll(roll, player)
 
 
-
-
 endgame = False
 greg = player.Player()
+cards.create_draw_piles()
 
 while not endgame:
     player_turn(greg)
@@ -29,5 +30,8 @@ while not endgame:
         print(greg.coins)
     elif "pass":
         pass
+
+
+
 
 

@@ -31,6 +31,7 @@ def check_roll(dice, player):
         print(f"you just got paid {payment} coins by the stadium")
         player.coins += payment
 
+
 def check_coins():
     pass
 
