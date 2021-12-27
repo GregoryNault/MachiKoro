@@ -17,3 +17,9 @@ class Player:
             "Radio Tower": False,
             "Train Station": False
         }
+
+    def buy_card (self, card, cost):
+        if self.coins > cost:
+            self.coins -= cost
+        if card in self.cards:
+            self.cards[card][1] += 1

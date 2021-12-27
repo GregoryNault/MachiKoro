@@ -19,6 +19,15 @@ def player_turn(player):
     # Checks if dice roll matches player cards and receive coins for any activated cards.
     money.check_roll(roll, player)
 
+    player_prompt = input("what do you want to do: ")
+    if player_prompt == "coins":
+        print(greg.coins)
+    elif player_prompt == "pass":
+        pass
+    elif player_prompt == "buy":
+        buy_card = input("which card?: ")
+        greg.buy_card(buy_card, 1)
+
 
 endgame = False
 greg = player.Player()
@@ -26,10 +35,7 @@ cards.create_draw_piles()
 
 while not endgame:
     player_turn(greg)
-    if input("what do you want to do") == "coins":
-        print(greg.coins)
-    elif "pass":
-        pass
+
 
 
 

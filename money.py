@@ -36,5 +36,5 @@ def check_coins():
     pass
 
 
-def make_payment():
+def buy_card(player, coins):
     pass

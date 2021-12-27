@@ -33,7 +33,7 @@ def create_draw_piles():
                 deck[key][1] -= 1
     print(dealt_cards1)
 
-    while len(dealt_cards2) < 4:
+    while len(dealt_cards2) < 2:
         dealt_card = card_names[random.randint(6, 8)]
         dealt_cards2.append(dealt_card)
         for key in deck:
