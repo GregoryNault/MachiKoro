@@ -5,7 +5,7 @@ import cards
 
 def roll_dice(player):
     dice_1 = random.randint(1, 6)
-    if player.landmarks["Train Station"]:
+    if player.landmarks["train station"]:
         dice_2 = random.randint(1, 6)
         return dice_1 + dice_2
     return dice_1
@@ -19,14 +19,20 @@ def player_turn(player):
     # Checks if dice roll matches player cards and receive coins for any activated cards.
     money.check_roll(roll, player)
 
-    player_prompt = input("what do you want to do: ")
+    player_prompt = input("what do you want to do: ").lower()
     if player_prompt == "coins":
         print(greg.coins)
     elif player_prompt == "pass":
         pass
     elif player_prompt == "buy":
-        buy_card = input("which card?: ")
-        greg.buy_card(buy_card, 1)
+        buy_card = input("which card?: ").lower()
+        greg.buy_card(buy_card) #, 1)
+    elif player_prompt == "show cards":
+        print(player.cards)
+        print(player.landmarks)
+    elif player_prompt == "landmark":
+        landmark = input("which landmark?: ").lower()
+        greg.buy_landmark(landmark, 1)
 
 
 endgame = False

@@ -1,3 +1,6 @@
+import cards
+
+
 class Player:
     def __init__(self):
         self.coins = 3
@@ -11,15 +14,37 @@ class Player:
             "stadium": 0
         }
         self.landmarks = {
-            "Town Hall": True,
-            "Amusement Park": False,
-            "Shopping Mall": False,
-            "Radio Tower": False,
-            "Train Station": False
+            "town hall": True,
+            "amusement park": False,
+            "shopping mall": False,
+            "radio tower": False,
+            "train station": False
         }
 
-    def buy_card (self, card, cost):
-        if self.coins > cost:
-            self.coins -= cost
+    def buy_card(self, card):
+        cost = cards.find_cost(card)
         if card in self.cards:
-            self.cards[card][1] += 1
+            if self.coins > cost:
+                self.coins -= cost
+            else:
+                print("you don't have enough money for that card")
+                return
+            self.cards[card] += 1
+        else:
+            print("that card doesn't exist")
+            return
+
+    def buy_landmark(self, card):
+        cost = cards.find_cost(card)
+        if card in self.landmarks:
+            if not self.landmarks[card]:
+                if self.coins > cost:
+                    self.coins -= cost
+                else:
+                    print("you don't have enough money for that card")
+                    return
+                self.landmarks[card] = True
+            else:
+                print("You already own that card")
+        else:
+            print("that card is not valid")

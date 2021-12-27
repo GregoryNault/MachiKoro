@@ -16,7 +16,11 @@ deck = {
     9: ["mine", 6, 6, 5],
     910: ["family restaurant", 6, 3, 2],
     10: ["apple orchard", 6, 3, 3],
-    1112: ["fruit market", 6, 2, 2]
+    1112: ["fruit market", 6, 2, 2],
+    "L1": ["train station", 0, 4],
+    "L2": ["shopping mall", 0, 10],
+    "L3": ["amusement park", 0, 16],
+    "L4": ["radio tower", 0, 22]
 }
 
 dealt_cards1 = []
@@ -50,8 +54,7 @@ def create_draw_piles():
     print(dealt_cards3)
 
 
-
-   # print("hi")
-
-    #if len(dealt_cards1) < 4:
-     #   for i in range(random.randint(1, 6)):
+def find_cost(card):
+    for key in deck:
+        if deck[key][0] == card:
+            return deck[key][2]
