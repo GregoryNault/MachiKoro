@@ -2,7 +2,7 @@ import cards
 
 
 class Player:
-    def __init__(self):
+    def __init__(self, name):
         self.coins = 3
         self.cards = {
             "wheat field": 1,
@@ -20,12 +20,14 @@ class Player:
             "radio tower": False,
             "train station": False
         }
+        self.name = name
 
     def buy_card(self, card):
         cost = cards.find_cost(card)
         if card in self.cards:
             if self.coins > cost:
                 self.coins -= cost
+                cards.check_deck(card)
             else:
                 print("you don't have enough money for that card")
                 return

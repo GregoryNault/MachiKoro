@@ -11,36 +11,47 @@ def roll_dice(player):
     return dice_1
 
 
+def player_prompt(player):
+    prompt = input("what do you want to do: ").lower()
+    if prompt == "coins":
+        print(player.coins)
+    elif prompt == "pass":
+        pass
+    elif prompt == "buy":
+        buy_card = input("which card?: ").lower()
+        player.buy_card(buy_card)
+    elif prompt == "show cards":
+        print(player.cards)
+        print(player.landmarks)
+    elif prompt == "landmark":
+        landmark = input("which landmark?: ").lower()
+        player.buy_landmark(landmark)
+
+
 def player_turn(player):
     # Player rolls a dice (2 dice if they own a train station)
+    print(f"hi, welcome to machi koro {player.name}")
     roll = roll_dice(player)
     print(f"You have just rolled a {roll}")
 
     # Checks if dice roll matches player cards and receive coins for any activated cards.
     money.check_roll(roll, player)
-
-    player_prompt = input("what do you want to do: ").lower()
-    if player_prompt == "coins":
-        print(greg.coins)
-    elif player_prompt == "pass":
-        pass
-    elif player_prompt == "buy":
-        buy_card = input("which card?: ").lower()
-        greg.buy_card(buy_card) #, 1)
-    elif player_prompt == "show cards":
-        print(player.cards)
-        print(player.landmarks)
-    elif player_prompt == "landmark":
-        landmark = input("which landmark?: ").lower()
-        greg.buy_landmark(landmark, 1)
+    player_prompt(player)
 
 
 endgame = False
-greg = player.Player()
-cards.create_draw_piles()
+
+num_players = int(input("How many players are there?: "))
+player_names = [input("Enter Player Name: ") for i in range(num_players)]
+
+player_objects = [player.Player(player_names[i]) for i in range(num_players)]
+print(player_objects)
+
 
 while not endgame:
-    player_turn(greg)
+    for player in player_objects:
+        cards.create_draw_piles()
+        player_turn(player)
 
 
 

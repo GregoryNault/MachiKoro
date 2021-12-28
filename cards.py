@@ -58,3 +58,19 @@ def find_cost(card):
     for key in deck:
         if deck[key][0] == card:
             return deck[key][2]
+
+
+def check_deck(card):
+    for i in range(len(dealt_cards1)):
+        if dealt_cards1[i][0] == card:
+            dealt_cards1.remove(dealt_cards1[i])
+            return
+    for i in range(len(dealt_cards2)):
+        if dealt_cards2[i][0] == card:
+            dealt_cards2.remove(dealt_cards2[i])
+            return
+    for i in range(len(dealt_cards3)):
+        if dealt_cards3[i][0] == card:
+            dealt_cards3.remove(dealt_cards3[i])
+            return
+
