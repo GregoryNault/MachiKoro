@@ -32,6 +32,14 @@ class Player:
                 print("you don't have enough money for that card")
                 return
             self.cards[card] += 1
+
+            if card in cards.dealt_cards1:
+                cards.dealt_cards1.remove(card)
+            if card in cards.dealt_cards2:
+                cards.dealt_cards2.remove(card)
+            if card in cards.dealt_cards3:
+                cards.dealt_cards3.remove(card)
+
         else:
             print("that card doesn't exist")
             return

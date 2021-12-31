@@ -28,14 +28,14 @@ def player_prompt(player):
         player.buy_landmark(landmark)
 
 
-def player_turn(player):
+def player_turn(player, player_list):
     # Player rolls a dice (2 dice if they own a train station)
     print(f"hi, welcome to machi koro {player.name}")
     roll = roll_dice(player)
     print(f"You have just rolled a {roll}")
 
     # Checks if dice roll matches player cards and receive coins for any activated cards.
-    money.check_roll(roll, player)
+    money.check_roll(roll, player, player_list)
     player_prompt(player)
 
 
@@ -45,13 +45,13 @@ num_players = int(input("How many players are there?: "))
 player_names = [input("Enter Player Name: ") for i in range(num_players)]
 
 player_objects = [player.Player(player_names[i]) for i in range(num_players)]
-print(player_objects)
+
 
 
 while not endgame:
     for player in player_objects:
         cards.create_draw_piles()
-        player_turn(player)
+        player_turn(player, player_objects)
 
 
 
