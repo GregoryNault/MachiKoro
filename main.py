@@ -65,6 +65,7 @@ while not endgame:
             if player.landmarks[landmark]:
                 endgame = True
                 winning_player = player
+
             else:
                 endgame = False
         print(endgame)
