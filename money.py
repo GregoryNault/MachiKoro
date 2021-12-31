@@ -56,6 +56,15 @@ def check_roll(dice, player, player_objects):
                   f"{other_player.coins}")
 
     if dice == 6 and player.cards["stadium"] > 0:
-        payment = cards.deck[61][-1] * player.cards["stadium"]
-        player.coins += payment
-        print(f"you just got paid {payment} coins by the ranch. Total coins: {player.coins}")
+        for other_player in player_objects:
+            if other_player.coins > 2:
+                other_player.coins -= 2
+                player.coins += 2
+                print(f"You have received 2 coin from {other_player}")
+            elif other_player.coins == 1:
+                other_player.coins -= 1
+                player.coins += 1
+                print(f"You have received 1 coin from {other_player}")
+
+
+
