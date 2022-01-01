@@ -65,3 +65,24 @@ class Player:
                 print("You already own that card")
         else:
             print("That landmark does not exits")
+
+    def show_cards(self):
+        card_list = []
+        for item in self.cards:
+            a = (item, self.cards[item])
+            card_list.append(a)
+        print("\nCards in your hand [(card name, number of cards)]")
+        print("*" * 140)
+        print(card_list[0:6])
+        print(card_list[9:15])
+        print(card_list[6:9])
+        landmark_list = []
+        for item in self.landmarks:
+            if self.landmarks[item]:
+                landmark_active = 1
+            else:
+                landmark_active = 0
+            landmark = (item, landmark_active)
+            landmark_list.append(landmark)
+        print(landmark_list)
+        print("*" * 140)

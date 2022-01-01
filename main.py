@@ -40,8 +40,7 @@ def player_prompt(player):
         if not buy_card:
             player_prompt(player)
     elif prompt == "show cards":
-        print(player.cards)
-        print(player.landmarks)
+        player.show_cards()
         player_prompt(player)
     elif prompt == "buy landmark":
         landmark_list = [key for key in player.landmarks if not player.landmarks[key]]
