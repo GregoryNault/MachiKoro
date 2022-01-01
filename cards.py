@@ -2,13 +2,13 @@ import random
 
 # [name, cards in hand, cost, player payout]
 deck = {
-    1: ["wheat field", 6, 1, 1],
-    2: ["ranch", 6, 1, 1],
-    23: ["bakery", 6, 1, 1],
-    3: ["cafe", 6, 2, 1],
-    4: ["convenience store", 6, 2, 3],
-    5: ["forest", 6, 3, 1],
-    61: ["stadium", 6, 6, 2],
+    1: ["wheat field", 2, 1, 1],
+    2: ["ranch", 2, 1, 1],
+    23: ["bakery", 2, 1, 1],
+    3: ["cafe", 2, 2, 1],
+    4: ["convenience store", 2, 2, 3],
+    5: ["forest", 2, 3, 1],
+    61: ["stadium", 2, 6, 2],
     62: ["business center", 6, 8, 0],
     63: ["tv station", 6, 7, 5],
     7: ["cheese factory", 6, 5, 3],

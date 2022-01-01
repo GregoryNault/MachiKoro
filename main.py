@@ -28,13 +28,13 @@ def roll_dice(player):
 
 
 def player_prompt(player):
-    prompt = input("what do you want to do [coins, show cards, buy, landmark or pass]: ").lower()
+    prompt = input("\nWhat would you like to do [coins, show cards, buy card, buy landmark or pass]: ").lower()
     if prompt == "coins":
-        print(player.coins)
+        print(f"You have {player.coins} coins")
         player_prompt(player)
     elif prompt == "pass":
         pass
-    elif prompt == "buy":
+    elif prompt == "buy card":
         buy_card = input("which card?: ").lower()
         buy_card = player.buy_card(buy_card)
         if not buy_card:
@@ -43,7 +43,7 @@ def player_prompt(player):
         print(player.cards)
         print(player.landmarks)
         player_prompt(player)
-    elif prompt == "landmark":
+    elif prompt == "buy landmark":
         landmark_list = [key for key in player.landmarks if not player.landmarks[key]]
         landmark = input(f"which landmark? [{landmark_list}: ").lower()
         player.buy_landmark(landmark)
@@ -55,9 +55,9 @@ def player_prompt(player):
 
 def player_turn(player, player_list):
     # Player rolls a dice (2 dice if they own a train station)
-    print(f"hi, welcome to machi koro {player.name}")
+    print(f"Hi {player.name}, it is your turn.")
     roll = roll_dice(player)
-    print(f"You have just rolled a {roll}")
+    print(f"You have just rolled a {roll}.")
 
     # Checks if dice roll matches player cards and receive coins for any activated cards.
     money.check_roll(roll, player, player_list)
@@ -67,11 +67,16 @@ def player_turn(player, player_list):
 endgame = False
 winning_player = None
 
+print("\nWelcome to Machi Koro!!\n")
 player_objects = player_entry()
+
 
 while not endgame:
     for player in player_objects:
+        print("\nCurrent Deck (card name, cost)")
+        print("-" * 100)
         cards.create_draw_piles()
+        print("-" * 100)
         player_turn(player, player_objects)
 
         if player.landmarks["train station"] and player.landmarks["amusement park"] and \
