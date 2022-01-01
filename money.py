@@ -31,8 +31,9 @@ def check_roll(dice, player, player_objects):
             if other_player.cards["cafe"] > 0 and player.coins > 0:
                 payment = other_player.cards["cafe"]
                 player.coins -= payment
+                other_player.coins += payment
                 print(f"You have paid {other_player.name} a total of {payment} coins because of their"
-                      f"cafe(s).")
+                      f" cafe(s).")
 
     if dice == 2 or dice == 3 and player.cards["bakery"] > 0:
         payment = cards.deck[23][-1] * player.cards["bakery"]

@@ -3,7 +3,7 @@ import cards
 
 class Player:
     def __init__(self, name):
-        self.coins = 3
+        self.coins = 123
         self.cards = {
             "wheat field": 1,
             "ranch": 0,
@@ -11,13 +11,22 @@ class Player:
             "cafe": 0,
             "convenience store": 0,
             "forest": 0,
-            "stadium": 0
+            "stadium": 0,
+            "business center": 0,
+            "tv station": 0,
+            "cheese factory": 0,
+            "furniture factory": 0,
+            "mine": 0,
+            "family restaurant": 0,
+            "apple orchard": 0,
+            "fruit market": 0
         }
+
         self.landmarks = {
-            "town hall": True,  #True,
-            "amusement park": True,  #False,
-            "shopping mall": True, #False,
-            "radio tower": True, #False,
+            "town hall": True,
+            "amusement park": False,
+            "shopping mall": False,
+            "radio tower": False,
             "train station": False
         }
         self.name = name
@@ -25,30 +34,20 @@ class Player:
     def buy_card(self, card):
         cost = cards.find_cost(card)
         if card in self.cards:
-            if cards.check_deck(card):
-                if self.coins >= cost:
+            if self.coins >= cost:
+                if cards.check_deck(card):
                     self.coins -= cost
                     self.cards[card] += 1
-
-                    if card in cards.dealt_cards1:
-                        cards.dealt_cards1.remove(card)
-                    elif card in cards.dealt_cards2:
-                        cards.dealt_cards2.remove(card)
-                    elif card in cards.dealt_cards3:
-                        cards.dealt_cards3.remove(card)
-
                     print(f"You have just bought a {card}. You have {self.coins} coins left.")
                     return True
                 else:
-                    print("You don't have enough coins")
+                    print("That card is not in the deck.")
                     return False
             else:
-                print("That card is not in the deck")
+                print("You don't have enough coins to buy that card.")
                 return False
-
-
         else:
-            print("that card doesn't exist")
+            print("That card doesn't exist in this game.")
             return False
 
     def buy_landmark(self, card):
@@ -61,14 +60,8 @@ class Player:
                     print("you don't have enough money for that card")
                     return
                 self.landmarks[card] = True
+                print(f"You have just bought a {card} landmark. You have {self.coins} coins left.")
             else:
                 print("You already own that card")
         else:
-            print("that card is not valid")
-
-    def check_landmarks(self, card):
-        for item in self.landmarks:
-            if not self.landmarks[item]:
-                return False
-            else:
-                return True
+            print("That landmark does not exits")

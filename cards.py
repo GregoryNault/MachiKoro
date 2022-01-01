@@ -27,6 +27,7 @@ dealt_cards1 = []
 dealt_cards2 = []
 dealt_cards3 = []
 
+
 def create_draw_piles():
     card_names = [(deck[key][0], deck[key][2]) for key in deck if deck[key][1] > 0]
     while len(dealt_cards1) < 4:
@@ -63,11 +64,14 @@ def find_cost(card):
 def check_deck(card):
     for i in range(len(dealt_cards1)):
         if dealt_cards1[i][0] == card:
+            dealt_cards1.pop(i)
             return True
     for i in range(len(dealt_cards2)):
         if dealt_cards2[i][0] == card:
+            dealt_cards2.pop(i)
             return True
     for i in range(len(dealt_cards3)):
         if dealt_cards3[i][0] == card:
+            dealt_cards3.pop(i)
             return True
 

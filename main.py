@@ -3,6 +3,22 @@ import random, player, money
 import cards
 
 
+def player_entry():
+    num_players = input("How many players are there [1-4]: ")
+    if num_players.isdigit():
+        num_players = int(num_players)
+        if 1 <= num_players <= 4:
+            player_names = [input("Enter Player Name: ") for i in range(num_players)]
+        else:
+            print("That is not a correct number of players to add, please try again")
+            player_entry()
+        player_objects_list = [player.Player(player_names[i]) for i in range(num_players)]
+        return player_objects_list
+    elif num_players.isalnum() or num_players.isalpha():
+        print("That is the wrong number of players. Please enter a number between 1 and 4.")
+        player_entry()
+
+
 def roll_dice(player):
     dice_1 = random.randint(1, 6)
     if player.landmarks["train station"]:
@@ -28,10 +44,9 @@ def player_prompt(player):
         print(player.landmarks)
         player_prompt(player)
     elif prompt == "landmark":
-        landmark = input("which landmark?: ").lower()
+        landmark_list = [key for key in player.landmarks if not player.landmarks[key]]
+        landmark = input(f"which landmark? [{landmark_list}: ").lower()
         player.buy_landmark(landmark)
-        #if player.check_landmarks(landmark):
-            #endgame = True
     else:
         print("That is not a valid entry, please try again")
         player_prompt(player)
@@ -50,29 +65,17 @@ def player_turn(player, player_list):
 
 
 endgame = False
+winning_player = None
 
-num_players = int(input("How many players are there?: "))
-player_names = [input("Enter Player Name: ") for i in range(num_players)]
-
-player_objects = [player.Player(player_names[i]) for i in range(num_players)]
-
+player_objects = player_entry()
 
 while not endgame:
     for player in player_objects:
         cards.create_draw_piles()
         player_turn(player, player_objects)
-        for landmark in player.landmarks:
-            if player.landmarks[landmark]:
-                endgame = True
-                winning_player = player
 
-            else:
-                endgame = False
-        print(endgame)
-
-print(f"The winning player is {winning_player}")
-
-
-
-
-
+        if player.landmarks["train station"] and player.landmarks["amusement park"] and \
+                player.landmarks["shopping mall"] and player.landmarks["radio tower"]:
+            endgame = True
+            print(f"Thanks for playing {player.name} won by completing all his city's landmarks!! Congratulations!!")
+            break
