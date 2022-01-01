@@ -86,3 +86,6 @@ class Player:
             landmark_list.append(landmark)
         print(landmark_list)
         print("*" * 140)
+
+
+
