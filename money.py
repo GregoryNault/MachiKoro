@@ -61,17 +61,31 @@ def check_roll(dice, player, player_objects):
 
     if dice == 6 and player.cards["stadium"] > 0:
         for other_player in player_objects:
-            if other_player.coins > 2:
-                other_player.coins -= 2
-                player.coins += 2
-                print(f"You have received 2 coin from {other_player}")
-            elif other_player.coins == 1:
-                other_player.coins -= 1
-                player.coins += 1
-                print(f"You have received 1 coin from {other_player}")
+            if other_player != player:
+                if other_player.coins > 2:
+                    other_player.coins -= 2
+                    player.coins += 2
+                    print(f"You have received 2 coin from {other_player.name}")
+                elif other_player.coins == 1:
+                    other_player.coins -= 1
+                    player.coins += 1
+                    print(f"You have received 1 coin from {other_player.name}")
 
     if dice == 6 and player.cards["business center"]:
-        print("trade cards with another player")
+        players = [other_player.name for other_player in player_objects if other_player != player]
+        player_to_trade = input(f"Pick another player to trade cards with [{players}]: ")
+        for other_player in player_objects:
+            if other_player.name == player_to_trade:
+                other_player.show_cards()
+                pick_other_player_card = input("Which card do you want to take?: ")
+                player.show_cards()
+                pick_your_card = input("Which card do you want to give?: ")
+                other_player.cards[pick_your_card] += 1
+                player.cards[pick_your_card] -= 1
+                player.cards[pick_other_player_card] += 1
+                other_player.cards[pick_other_player_card] -= 1
+                print(f"You have taken the {pick_other_player_card} from {other_player.name} and given "
+                      f"them a {pick_your_card}.")
 
     if dice == 6 and player.cards["tv station"]:
         other_player_selection = input("Pick another player to take coins from ['coins' to see players coins]: ").lower()
@@ -81,9 +95,12 @@ def check_roll(dice, player, player_objects):
                     print(f"{other_player.name} has {other_player.coins} coins.")
         else:
             for other_player in player_objects:
-                other_player.coins -= 5
-                player.coins += 5
-                print(f"You just took 5 coins from {other_player}")
+                if other_player.name == other_player_selection:
+                    if other_player.coins < 5:
+                        other_player.coins = 0
+                    other_player.coins -= 5
+                    player.coins += 5
+                    print(f"You just took 5 coins from {other_player.name}")
 
     if dice == 7 and player.cards["cheese factory"] > 0:
         payment = cards.deck[7][-1] * player.cards["ranch"] * player.cards["cheese factory"]
