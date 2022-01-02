@@ -72,20 +72,8 @@ def check_roll(dice, player, player_objects):
                     print(f"You have received 1 coin from {other_player.name}")
 
     if dice == 6 and player.cards["business center"]:
-        players = [other_player.name for other_player in player_objects if other_player != player]
-        player_to_trade = input(f"Pick another player to trade cards with [{players}]: ")
-        for other_player in player_objects:
-            if other_player.name == player_to_trade:
-                other_player.show_cards()
-                pick_other_player_card = input("Which card do you want to take?: ")
-                player.show_cards()
-                pick_your_card = input("Which card do you want to give?: ")
-                other_player.cards[pick_your_card] += 1
-                player.cards[pick_your_card] -= 1
-                player.cards[pick_other_player_card] += 1
-                other_player.cards[pick_other_player_card] -= 1
-                print(f"You have taken the {pick_other_player_card} from {other_player.name} and given "
-                      f"them a {pick_your_card}.")
+        # business_center(player, player_objects)
+        print("business center doesn't work, HAHAHa")
 
     if dice == 6 and player.cards["tv station"]:
         other_player_selection = input("Pick another player to take coins from ['coins' to see players coins]: ").lower()
@@ -154,7 +142,43 @@ def check_roll(dice, player, player_objects):
         print(f"You just got paid {payment} coins by your fruit market(s). Total coins: {player.coins}")
 
 
+def business_center(player, player_objects):
+    players = [other_player.name for other_player in player_objects if other_player != player]
+    player_to_trade = input(f"Pick another player to trade cards with [{players}]: ")
+    if player_to_trade in players:
+        for other_player in player_objects:
+            if other_player.name == player_to_trade:
+                other_player.show_cards()
+                pick_other_player_card = business_center_card_selection(other_player, "other cards")
+                print(pick_other_player_card)
+                player.show_cards()
+                pick_your_card = business_center_card_selection(player, "player cards")
+                other_player.cards[pick_your_card] += 1
+                player.cards[pick_your_card] -= 1
+                player.cards[pick_other_player_card] += 1
+                other_player.cards[pick_other_player_card] -= 1
+                print(f"You have taken the {pick_other_player_card} from {other_player.name} and given "
+                      f"them a {pick_your_card}.")
+    else:
+        print("That is not a correct player name, please try again.")
+        business_center(player, player_objects)
 
+
+def business_center_card_selection(other_player, who_trades):
+    if who_trades == "other cards":
+        selected_card = input(f"Which card do you want to take from {other_player.name} player?: ")
+    else:
+        selected_card = input("Which card do you wish to give to the other player?: ")
+
+    if selected_card not in other_player.cards:
+        print("That is not a valid card selection, try again.")
+        business_center_card_selection(other_player, who_trades)
+    elif other_player.cards[selected_card] < 1:
+        print("There are no cards of that type available to trade, make another selection.")
+        business_center_card_selection(other_player, who_trades)
+    else:
+        print(f"the selected card is {selected_card}")
+        return selected_card
 
 
 
