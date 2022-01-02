@@ -3,7 +3,7 @@ import cards
 
 class Player:
     def __init__(self, name):
-        self.coins = 123
+        self.coins = 3
         self.cards = {
             "wheat field": 1,
             "ranch": 0,
