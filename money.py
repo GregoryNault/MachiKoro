@@ -30,8 +30,12 @@ def check_roll(dice, player, player_objects):
 
     if dice == 3:
         for other_player in player_objects:
-            if other_player.cards["cafe"] > 0 and player.coins > 0:
+            if player.coins == 0 and other_player != player:
+                print(f"You have no coins to give {other_player.name}.")
+            if other_player.cards["cafe"] > 0 and player.coins > 0 and other_player != player:
                 payment = other_player.cards["cafe"]
+                if payment > player.coins:
+                    payment = player.coins
                 player.coins -= payment
                 other_player.coins += payment
                 print(f"You have paid {other_player.name} a total of {payment} coins because of their cafe(s).")
@@ -103,6 +107,8 @@ def check_roll(dice, player, player_objects):
         for other_player in player_objects:
             if other_player.cards["family restaurant"] > 0 and player.coins > 0:
                 payment = other_player.cards["family restaurant"] * 2
+                if payment > player.coins:
+                    payment = player.coins
                 player.coins -= payment
                 other_player.coins += payment
                 print(f"You have paid {other_player.name} a total of {payment} coins "
@@ -128,8 +134,8 @@ def check_roll(dice, player, player_objects):
             print(f"You just got paid {payment} coins by your apple orchard(s). Total coins: {player.coins}")
 
         for other_player in player_objects:
-            if other_player != player and other_player["apple orchard"] > 0:
-                other_player_payment = cards.deck[10][-1] * other_player.cards["forest"]
+            if other_player != player and other_player.cards["apple orchard"] > 0:
+                other_player_payment = cards.deck[10][-1] * other_player.cards["apple orchard"]
                 other_player.coins += other_player_payment
                 print(f"{other_player.name}, just got paid {other_player_payment} for their apple orchard(s). "
                       f"Total coins: {other_player.coins}")
