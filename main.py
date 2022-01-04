@@ -24,7 +24,7 @@ def roll_dice(player):
     if player.landmarks["train station"]:
         dice_2 = random.randint(1, 6)
         return dice_1 + dice_2
-    return dice_1
+    return 6 #dice_1
 
 
 def player_prompt(player):

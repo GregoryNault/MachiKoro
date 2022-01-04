@@ -79,19 +79,7 @@ def check_roll(dice, player, player_objects):
         business_center(player, player_objects)
 
     if dice == 6 and player.cards["tv station"]:
-        other_player_selection = input("Pick another player to take coins from ['coins' to see players coins]: ").lower()
-        if other_player_selection == "coins":
-            for other_player in player_objects:
-                if other_player != player:
-                    print(f"{other_player.name} has {other_player.coins} coins.")
-        else:
-            for other_player in player_objects:
-                if other_player.name == other_player_selection:
-                    if other_player.coins < 5:
-                        other_player.coins = 0
-                    other_player.coins -= 5
-                    player.coins += 5
-                    print(f"You just took 5 coins from {other_player.name}")
+        tv_station_pick_player(player, player_objects)
 
     if dice == 7 and player.cards["cheese factory"] > 0:
         payment = cards.deck[7][-1] * player.cards["ranch"] * player.cards["cheese factory"]
@@ -105,7 +93,9 @@ def check_roll(dice, player, player_objects):
 
     if dice == 9 or dice == 10:
         for other_player in player_objects:
-            if other_player.cards["family restaurant"] > 0 and player.coins > 0:
+            if player.coins == 0 and other_player != player:
+                print(f"You have no coins to give {other_player.name}")
+            if other_player.cards["family restaurant"] > 0 and player.coins > 0 and other_player != player:
                 payment = other_player.cards["family restaurant"] * 2
                 if payment > player.coins:
                     payment = player.coins
@@ -190,7 +180,24 @@ def business_center_card_selection(other_player, other):
         return selected_card
 
 
-
+def tv_station_pick_player(player, player_objects):
+    other_player_selection = input("Pick another player to take coins from ['coins' to see players coins]: ").lower()
+    if other_player_selection in player_objects or other_player_selection == "coins":
+        if other_player_selection == "coins":
+            for other_player in player_objects:
+                if other_player != player:
+                    print(f"{other_player.name} has {other_player.coins} coins.")
+        else:
+            for other_player in player_objects:
+                if other_player.name == other_player_selection:
+                    if other_player.coins < 5:
+                        other_player.coins = 0
+                    other_player.coins -= 5
+                    player.coins += 5
+                    print(f"You just took 5 coins from {other_player.name}")
+    else:
+        print("THis is not a valid player")
+        tv_station_pick_player(player, player_objects)
 
 
 
