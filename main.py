@@ -2,7 +2,6 @@
 import random, player, money
 import cards
 
-
 def player_entry():
     num_players = input("How many players are there [1-4]: ")
     if num_players.isdigit():
@@ -18,13 +17,12 @@ def player_entry():
         print("That is the wrong number of players. Please enter a number between 1 and 4.")
         player_entry()
 
-
 def roll_dice(player):
     dice_1 = random.randint(1, 6)
     if player.landmarks["train station"]:
         dice_2 = random.randint(1, 6)
         return dice_1 + dice_2
-    return 6 #dice_1
+    return dice_1
 
 
 def player_prompt(player):

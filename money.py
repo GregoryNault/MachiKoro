@@ -79,21 +79,30 @@ def check_roll(dice, player, player_objects):
         business_center(player, player_objects)
 
     if dice == 6 and player.cards["tv station"]:
-        player_to_pay = tv_station_pick_player2(player, player_objects)
-        for other_player in player_objects:
-            if other_player.name == player_to_pay:
-                if other_player.coins >= 5:
-                    other_player.coins -= 5
-                    player.coins += 5
-                    print(f"{other_player.name} just payed you 5 coins for your tv station!")
-                elif other_player.coins >= 1:
-                    player.coins += other_player.coins
-                    print(f"{other_player.name} just payed you {other_player.coins} coins for your tv station!")
-                    other_player.coins = 0
-                elif other_player.coins == 0:
-                    print(f"{other_player.name} has no more coins to give.")
-
-
+        player_list = [other_player.name for other_player in player_objects if other_player != player and \
+                       other_player.coins > 0]
+        if len(player_list) == 0:
+            print("There is no one playing that can pay you any money.")
+        else:
+            select = True
+            player_select = ""
+            while select:
+                player_select = input(f"Which player do you wish to take payment from {player_list}: ")
+                if player_select in player_list:
+                    break
+                else:
+                    print("That is not a valid player, please try again.")
+            print(player_select)
+            for other_player in player_objects:
+                if other_player.name == player_select and other_player != player:
+                    if other_player.coins >= 5:
+                        other_player.coins -= 5
+                        print(f"{other_player.name} has paid you 5 coins.")
+                    elif other_player.coins >= 1:
+                        print(f"{other_player.name} has paid you {other_player.coins} coins")
+                        other_player.coins = 0
+                    elif other_player.coins == 0:
+                        print(f"{other_player.name} doesn't have enough coins to pay you")
 
     if dice == 7 and player.cards["cheese factory"] > 0:
         payment = cards.deck[7][-1] * player.cards["ranch"] * player.cards["cheese factory"]
@@ -193,35 +202,6 @@ def business_center_card_selection(other_player, other):
     if selected_card in other_player.cards and other_player.cards[selected_card] > 0:
         return selected_card
 
-
-def tv_station_pick_player(player, player_objects):
-    other_player_selection = input("Pick another player to take coins from ['coins' to see players coins]: ").lower()
-    if other_player_selection in player_objects or other_player_selection == "coins":
-        if other_player_selection == "coins":
-            for other_player in player_objects:
-                if other_player != player:
-                    print(f"{other_player.name} has {other_player.coins} coins.")
-        else:
-            for other_player in player_objects:
-                if other_player.name == other_player_selection:
-                    if other_player.coins < 5:
-                        other_player.coins = 0
-                    other_player.coins -= 5
-                    player.coins += 5
-                    print(f"You just took 5 coins from {other_player.name}")
-    else:
-        print("THis is not a valid player")
-        tv_station_pick_player(player, player_objects)
-
-
-def tv_station_pick_player2(player, player_objects):
-    player_list = [other_player.name for other_player in player_objects if other_player != player]
-    player_select = input(f"Who do you want to take coins from?[{player_list}]: ")
-    if player_select in player_list:
-        return player_select
-    else:
-        print("Not a player in this game, please try again.")
-        tv_station_pick_player2(player, player_objects)
 
 
 
