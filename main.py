@@ -17,10 +17,15 @@ def player_entry():
         print("That is the wrong number of players. Please enter a number between 1 and 4.")
         player_entry()
 
-def roll_dice(player):
-    dice_1 = random.randint(1, 6)
+
+def roll_dice(player, doubles):
+    dice_1 = 1 #random.randint(1, 6)
+    dice_2 = 1  # random.randint(1, 6)
     if player.landmarks["train station"]:
-        dice_2 = random.randint(1, 6)
+        if player.landmarks["amusement park"] and dice_1 == dice_2:
+            doubles = True
+            print("hi")
+
         return dice_1 + dice_2
     return dice_1
 
@@ -53,12 +58,17 @@ def player_prompt(player):
 def player_turn(player, player_list):
     # Player rolls a dice (2 dice if they own a train station)
     print(f"Hi {player.name}, it is your turn.")
-    roll = roll_dice(player)
+    doubles = False
+    roll = roll_dice(player, doubles)
     print(f"You have just rolled a {roll}.")
 
     # Checks if dice roll matches player cards and receive coins for any activated cards.
     money.check_roll(roll, player, player_list)
     player_prompt(player)
+    if doubles:
+        print(f"You had rolled doubles, you get another turn because of your amusement park.")
+        doubles = False
+        player_turn(player, doubles)
 
 
 endgame = False
