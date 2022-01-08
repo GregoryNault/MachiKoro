@@ -102,14 +102,16 @@ def check_roll(dice, player, player_objects):
                     break
                 else:
                     print("That is not a valid player, please try again.")
-            print(player_select)
             for other_player in player_objects:
                 if other_player.name == player_select and other_player != player:
                     if other_player.coins >= 5:
                         other_player.coins -= 5
-                        print(f"{other_player.name} has paid you 5 coins.")
+                        player.coins += 5
+                        print(f"{other_player.name} has paid you 5 coins. Total coins: {player.coins}")
                     elif other_player.coins >= 1:
-                        print(f"{other_player.name} has paid you {other_player.coins} coins")
+                        print(f"{other_player.name} has paid you {other_player.coins} coins. Total coins: "
+                              f"{player.coins}")
+                        player.coins += other_player.coins
                         other_player.coins = 0
                     elif other_player.coins == 0:
                         print(f"{other_player.name} doesn't have enough coins to pay you")
@@ -120,7 +122,8 @@ def check_roll(dice, player, player_objects):
         print(f"You just got paid {payment} coins by your cheese factory(s). Total coins: {player.coins}")
 
     if dice == 8 and player.cards["furniture factory"] > 0:
-        payment = cards.deck[8][-1] * (player.cards["forest"] + player.cards["mine"]) * player.cards["cheese factory"]
+        payment = cards.deck[8][-1] * (player.cards["forest"] + player.cards["mine"]) * player.cards["furniture " \
+                                                                                                     "factory"]
         player.coins += payment
         print(f"You just got paid {payment} coins by your furniture factory(s). Total coins: {player.coins}")
 

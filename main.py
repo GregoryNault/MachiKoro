@@ -29,24 +29,28 @@ def roll_dice(player):
 
 
 def player_prompt(player):
-    prompt = input("\nWhat would you like to do [coins, show cards, buy card, buy landmark or pass]: ").lower()
-    if prompt == "coins":
+    prompt = input("\nWhat would you like to do?\n[1) Show Coins, 2) Show Cards, 3) Buy Development "
+                   "4) Buy Landmark, 5) Show the current deck 6) Pass Turn]: ")
+    if prompt == "1":
         print(f"You have {player.coins} coins")
         player_prompt(player)
-    elif prompt == "pass":
+    elif prompt == "6":
         pass
-    elif prompt == "buy card":
-        buy_card = input("which card?: ").lower()
+    elif prompt == "3":
+        buy_card = input("Which development card would you like to purchase [For example, 'wheat field']?: ").lower()
         buy_card = player.buy_card(buy_card)
         if not buy_card:
             player_prompt(player)
-    elif prompt == "show cards":
+    elif prompt == "2":
         player.show_cards()
         player_prompt(player)
-    elif prompt == "buy landmark":
+    elif prompt == "4":
         landmark_list = [key for key in player.landmarks if not player.landmarks[key]]
-        landmark = input(f"which landmark? [{landmark_list}: ").lower()
+        landmark = input(f"Which landmark card would you like to purchase [{landmark_list}]?: ").lower()
         player.buy_landmark(landmark)
+    elif prompt == "5":
+        cards.current_deck()
+        player_prompt(player)
     else:
         print("That is not a valid entry, please try again")
         player_prompt(player)
@@ -99,10 +103,7 @@ player_objects = player_entry()
 
 while not endgame:
     for player in player_objects:
-        print("\nCurrent Deck (card name, cost)")
-        print("-" * 100)
-        cards.create_draw_piles()
-        print("-" * 100)
+        cards.current_deck()
         player_turn(player, player_objects)
 
         if player.landmarks["train station"] and player.landmarks["amusement park"] and \

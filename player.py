@@ -3,19 +3,19 @@ import cards
 
 class Player:
     def __init__(self, name):
-        self.coins = 3
+        self.coins = 30
         self.cards = {
             "wheat field": 1,
             "ranch": 0,
             "bakery": 1,
             "cafe": 0,
             "convenience store": 0,
-            "forest": 0,
+            "forest": 1,
             "stadium": 0,
             "business center": 0,
             "tv station": 0,
             "cheese factory": 0,
-            "furniture factory": 0,
+            "furniture factory": 1,
             "mine": 0,
             "family restaurant": 0,
             "apple orchard": 0,

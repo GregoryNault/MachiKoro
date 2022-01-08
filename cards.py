@@ -75,3 +75,8 @@ def check_deck(card):
             dealt_cards3.pop(i)
             return True
 
+def current_deck():
+    print("\nCurrent Deck (card name, cost)")
+    print("-" * 100)
+    create_draw_piles()
+    print("-" * 100)
