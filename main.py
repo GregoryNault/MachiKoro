@@ -18,14 +18,12 @@ def player_entry():
         player_entry()
 
 
-def roll_dice(player, doubles):
-    dice_1 = 1 #random.randint(1, 6)
-    dice_2 = 1  # random.randint(1, 6)
+def roll_dice(player):
+    dice_1 = random.randint(1, 6)
+    dice_2 = random.randint(1, 6)
+    if player.landmarks["train station"] and player.landmarks["amusement park"] and dice_1 == dice_2:
+        return dice_1 + dice_2 + 20
     if player.landmarks["train station"]:
-        if player.landmarks["amusement park"] and dice_1 == dice_2:
-            doubles = True
-            print("hi")
-
         return dice_1 + dice_2
     return dice_1
 
@@ -57,18 +55,39 @@ def player_prompt(player):
 
 def player_turn(player, player_list):
     # Player rolls a dice (2 dice if they own a train station)
+    global extra_turn
+    extra_turn = False
     print(f"Hi {player.name}, it is your turn.")
-    doubles = False
-    roll = roll_dice(player, doubles)
+    roll = roll_dice(player)
+
+    if roll > 20:
+        print("You have just rolled doubles, you get an extra turn because of your amusement park")
+        extra_turn = True
+        roll -= 20
     print(f"You have just rolled a {roll}.")
+
+    if player.landmarks["radio tower"]:
+        re_roll_prompt = input("You have a radio tower do you wish to re-roll (y/n)?: ")
+        if re_roll_prompt == "y":
+            roll = roll_dice(player)
+            if roll > 20:
+                print("You have just rolled doubles, you get an extra turn because of your amusement park")
+                extra_turn = True
+                roll -= 20
+            print(f"You have just rolled a {roll}.")
 
     # Checks if dice roll matches player cards and receive coins for any activated cards.
     money.check_roll(roll, player, player_list)
+
+    if player.coins == 0 and player.landmarks["town hall"]:
+        player.coins += 1
+        print("You had 0 coins, you were give 1 coin by your town hall")
+
     player_prompt(player)
-    if doubles:
-        print(f"You had rolled doubles, you get another turn because of your amusement park.")
-        doubles = False
-        player_turn(player, doubles)
+
+    if extra_turn:
+        extra_turn = False
+        player_turn(player, player_list)
 
 
 endgame = False

@@ -12,8 +12,8 @@ class Player:
             "convenience store": 0,
             "forest": 0,
             "stadium": 0,
-            "business center": 1,
-            "tv station": 1,
+            "business center": 0,
+            "tv station": 0,
             "cheese factory": 0,
             "furniture factory": 0,
             "mine": 0,
@@ -24,10 +24,10 @@ class Player:
 
         self.landmarks = {
             "town hall": True,
-            "amusement park": True,
+            "train station": False,
             "shopping mall": False,
-            "radio tower": False,
-            "train station": True
+            "amusement park": False,
+            "radio tower": False
         }
         self.name = name
 

@@ -34,6 +34,8 @@ def check_roll(dice, player, player_objects):
                 print(f"You have no coins to give {other_player.name}.")
             if other_player.cards["cafe"] > 0 and player.coins > 0 and other_player != player:
                 payment = other_player.cards["cafe"]
+                if other_player.landmarks["shopping mall"]:
+                    payment += 1 * other_player.cards["cafe"]
                 if payment > player.coins:
                     payment = player.coins
                 player.coins -= payment
@@ -42,11 +44,19 @@ def check_roll(dice, player, player_objects):
 
     if dice == 2 or dice == 3 and player.cards["bakery"] > 0:
         payment = cards.deck[23][-1] * player.cards["bakery"]
+        if player.landmarks["shopping mall"]:
+            mall_payment = 1 * player.cards["bakery"]
+            payment += mall_payment
+            print(f"Your bakery earned an extra {mall_payment} coins thanks to your shopping mall.")
         player.coins += payment
         print(f"You just got paid {payment} coins by your bakery(s). Total coins: {player.coins}")
 
     if dice == 4 and player.cards["convenience store"] > 0:
         payment = cards.deck[4][-1] * player.cards["convenience store"]
+        if player.landmarks["shopping mall"]:
+            mall_payment = 1 * player.cards["convenience store"]
+            payment += mall_payment
+            print(f"Your convenience store earned an extra {mall_payment} coins thanks to your shopping mall.")
         player.coins += payment
         print(f"You just got paid {payment} coins by your convenience store(s). Total coins: {player.coins}")
 
@@ -120,6 +130,8 @@ def check_roll(dice, player, player_objects):
                 print(f"You have no coins to give {other_player.name}")
             if other_player.cards["family restaurant"] > 0 and player.coins > 0 and other_player != player:
                 payment = other_player.cards["family restaurant"] * 2
+                if other_player.landmarks["shopping mall"]:
+                    payment += 1 * other_player.cards["family restaurant"]
                 if payment > player.coins:
                     payment = player.coins
                 player.coins -= payment
@@ -131,7 +143,7 @@ def check_roll(dice, player, player_objects):
         if player.cards["mine"] > 0:
             payment = cards.deck[9][-1] * player.cards["mine"]
             player.coins += payment
-            print(f"You just got paid {payment} coins by your forest(s). Total coins: {player.coins}")
+            print(f"You just got paid {payment} coins by your mine(s). Total coins: {player.coins}")
 
         for other_player in player_objects:
             if other_player != player and other_player.cards["mine"] > 0:
@@ -153,9 +165,9 @@ def check_roll(dice, player, player_objects):
                 print(f"{other_player.name}, just got paid {other_player_payment} for their apple orchard(s). "
                       f"Total coins: {other_player.coins}")
 
-    if dice == 11 or dice == 12 and player.cards["fruit market"] > 0:
+    if dice == 11 and player.cards["fruit market"] > 0 or dice == 12 and player.cards["fruit market"] > 0:
         payment = cards.deck[1112][-1] * (player.cards["wheat field"] + player.cards["apple orchard"]) * \
-                  player.cards["cheese factory"]
+                  player.cards["fruit market"]
         player.coins += payment
         print(f"You just got paid {payment} coins by your fruit market(s). Total coins: {player.coins}")
 
