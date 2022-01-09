@@ -32,6 +32,8 @@ class Player:
         self.name = name
 
     def buy_card(self, card):
+        # Finds cost of card, checks players coins, checks if the card is one of the dealt piles.
+        # If all is true then player gains the card and the card is subtracted from dealt piles.
         cost = cards.find_cost(card)
         if card in self.cards:
             if self.coins >= cost:
@@ -51,6 +53,8 @@ class Player:
             return False
 
     def buy_landmark(self, card):
+        # Checks cost of landmark, checks if player already has the landmark (False - player doesn't have landmark),
+        # checks player coins. Will purchase and activate landmark card.
         cost = cards.find_cost(card)
         if card in self.landmarks:
             if not self.landmarks[card]:
@@ -67,6 +71,7 @@ class Player:
             print("That landmark does not exits")
 
     def show_cards(self):
+        # Displays all of the players development and landmark cards.
         card_list = []
         for item in self.cards:
             a = (item, self.cards[item])
